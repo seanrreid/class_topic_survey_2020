@@ -1,1 +1,10 @@
-<h1>Hello World</h1>
+${classInfoData.map(entry => {
+    return `<p>${entry.topic_name} - ${entry.status_id}</p>`
+}).join('')}
+
+<form name="test-form" action="/" method="POST">
+    <label>First name
+        <input type="text" name="first_name" id="first_name" placeholder="First name" />
+    </label>
+    <button type="submit">Submit</button>
+</form>

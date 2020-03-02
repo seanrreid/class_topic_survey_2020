@@ -1,11 +1,29 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express'),
+  router = express.Router(),
+  surveyModel = require('../models/surveyModel');
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
+router.get('/', async function(req, res, next) {
+  const classInfoData = await surveyModel.getAllTopicData();
+
   res.render('template', {
     locals: {
-      title: 'Welcome'
+      title: 'Welcome',
+      classInfoData: classInfoData
+    },
+    partials: {
+      partial: 'partial-index'
+    }
+  });
+});
+
+router.post('/', async function(req, res) {
+  console.log('the request is: ', req.body);
+  const classInfoData = await surveyModel.getAllTopicData();
+  res.render('template', {
+    locals: {
+      title: `Welcome ${req.body.first_name}`,
+      classInfoData: classInfoData
     },
     partials: {
       partial: 'partial-index'
