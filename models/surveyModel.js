@@ -9,7 +9,22 @@ class ClassInfo {
 
   static async getAllTopicData() {
     try {
-      const response = await db.any(`SELECT * FROM topics;`);
+      const response = await db.any(
+        `SELECT * FROM topics 
+        INNER JOIN class_status 
+        ON topics.status_id = class_status.id 
+        ORDER BY topics.id;`
+      );
+      return response;
+    } catch (error) {
+      console.error('ERROR: ', error);
+      return error;
+    }
+  }
+
+  static async getAllStatuses() {
+    try {
+      const response = await db.any(`SELECT * FROM class_status;`);
       return response;
     } catch (error) {
       console.error('ERROR: ', error);

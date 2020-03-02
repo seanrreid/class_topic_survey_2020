@@ -5,11 +5,13 @@ const express = require('express'),
 /* GET home page. */
 router.get('/', async function(req, res, next) {
   const classInfoData = await surveyModel.getAllTopicData();
+  const topicStatusData = await surveyModel.getAllStatuses();
 
   res.render('template', {
     locals: {
       title: 'Welcome',
-      classInfoData: classInfoData
+      classInfoData: classInfoData,
+      topicStatusData: topicStatusData
     },
     partials: {
       partial: 'partial-index'
@@ -18,17 +20,9 @@ router.get('/', async function(req, res, next) {
 });
 
 router.post('/', async function(req, res) {
-  console.log('the request is: ', req.body);
-  const classInfoData = await surveyModel.getAllTopicData();
-  res.render('template', {
-    locals: {
-      title: `Welcome ${req.body.first_name}`,
-      classInfoData: classInfoData
-    },
-    partials: {
-      partial: 'partial-index'
-    }
-  });
+  console.log(req.body);
+  const { first_name } = req.body;
+  renderPage(res, `Welcome ${first_name}`);
 });
 
 module.exports = router;
